@@ -1,6 +1,21 @@
+{% load static %}
+
+<style>
+  .Hello-msg{
+    font-size: 18px;
+    color: #fff;
+    margin-right: 20px;
+  }
+  .nav-link{
+    font-size: 18px;
+    color: #fff;
+    margin-right: 20px;
+  }
+</style>
+
 <!-- Navbar code through bootstrap -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <a class="navbar-brand" href="#">YosefZal</a>
+  <!---img src="{% static 'images/logo.png' %}"--->
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -16,10 +31,26 @@
         <li class="nav-item">
           <a class="nav-link" href="#">Features</a>
         </li>
-      {% elif pageType == 'dashboard' %}
+      {% elif pageType == 'Patient' %}
         <!-- Dashboard page buttons -->
         <li class="nav-item active">
-          <a class="nav-link" href="#">Dashboard </a>
+          <a class="nav-link" href="#">Patient </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Features</a>
+        </li>
+            {% elif pageType == 'Doctor' %}
+        <!-- Dashboard page buttons -->
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Doctor </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Features</a>
+        </li>
+            {% elif pageType == 'Administrator' %}
+        <!-- Dashboard page buttons -->
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Administrator </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Features</a>
@@ -27,4 +58,18 @@
       {% endif %}
     </ul>
   </div>
+  <!-- If statement to detect the page and change the buttons accordingly -->
+  {% if pageType == 'Patient' %}
+    <span class="Hello-msg">Hello, {{request.user}}</span>
+    <span><a class="Hello-msg" href="{% url 'logout' %}">Logout</a></span>
+   {% elif pageType == 'Doctor' %}
+    <span class="Hello-msg">Hello, {{request.user}}</span>
+    <span><a class="Hello-msg" href="{% url 'logout' %}">Logout</a></span>
+  {% elif pageType == 'Administrator' %}
+    <span class="Hello-msg">Hello, {{request.user}}</span>
+    <span><a class="Hello-msg" href="{% url 'logout' %}">Logout</a></span>
+  {% elif pageType == 'home' %}
+    <span><a class="Hello-msg" href="{% url 'login' %}">Login</a></span>
+  {% endif %}
 </nav>
+
