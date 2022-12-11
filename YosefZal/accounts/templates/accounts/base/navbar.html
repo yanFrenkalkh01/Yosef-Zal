@@ -1,0 +1,59 @@
+<section class="preloader">
+	<div class="spinner">
+		<span class="spinner-rotate"></span>
+	</div>
+</section>
+
+<nav class="navbar navbar-expand-lg">
+	<div class="container">
+
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		{% if pageType == 'home' %}
+			<span class="navbar-brand mx-auto mx-lg-0">יוספז"ל בע"מ</span>
+		{% elif pageType == 'login' or 'register' or 'go_find' %}
+			<span class="navbar-brand mx-auto mx-lg-0" id="size_plus_bold_top2">יוספז"ל בע"מ</span>
+		{% endif %}
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav ms-lg-5">
+
+				{% if pageType == 'home' %}
+					<li class="nav-item">
+						<a class="nav-link click-scroll" id="size_plus_bold_top" href="gofind.html">אודות</a>
+					</li>
+
+					<li class="nav-item">
+						<a class="nav-link click-scroll" id="size_plus_bold_top" href="#section_3">שירותים</a>
+					</li>
+
+					<li class="nav-item">
+						<a class="nav-link click-scroll" id="size_plus_bold_top" href="#section_4">מוצרים</a>
+					</li>
+
+					<li class="nav-item">
+						<a class="nav-link click-scroll" id="size_plus_bold_top" href="#section_5">צור קשר</a>
+					</li>
+				{% elif pageType == 'login' or 'register' or 'go_find' %}
+
+					<li class="nav-item">
+						<a class="nav-link click-scroll" id="size_plus_bold_top2" href="{% url 'home' %}">בית</a>
+					</li>
+				{% elif pageType == '' %}
+				{% endif %}
+
+			</ul>
+		</div>
+
+		{% if pageType == 'home' %}
+			<div class="d-lg-flex align-items-center d-none ms-auto">
+				<i class="navbar-icon bi-telephone-plus me-3"></i>
+				<a class="custom-btn btn" href="{% url 'go_find' %}">
+					*לך תחפש
+				</a>
+			</div>
+		{% endif %}
+
+	</div>
+</nav>
