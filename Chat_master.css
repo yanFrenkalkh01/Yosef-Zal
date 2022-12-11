@@ -1,0 +1,23 @@
+
+body{
+  background-color: orange;
+}
+p{
+  text-align: center;
+}
+input{
+  color: brown;
+}
+#first{
+  color: red;
+  text-align: center;
+  font-size: 25px
+}
+#shimush{
+  font-size: 25px;
+  color: brown
+}
+
+#hay{
+  text-align: center;
+}
