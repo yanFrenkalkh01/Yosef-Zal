@@ -10,6 +10,7 @@ urlpatterns = [
     # home page urls
     path('', views.home, name="home"),
     path('home/', views.home, name="home"),
+    path('home/go_find', views.go_find, name="go_find"),
     path('dashboard/', views.dashboard, name="dashboard"),
 
     # User urls

@@ -23,13 +23,18 @@ NavBarRender = {
     'doctor': {'pageType': 'Doctor'},
     'administrator': {'pageType': 'Administrator'},
     'home': {'pageType': 'home'},
-    'register': {'pageType': 'register'},
+    'go_find': {'pageType': 'go_find'},
 }
 
 
 def home(request):
     # Home page
     return render(request, 'accounts/home.html', NavBarRender['home'])
+
+
+def go_find(request):
+    # go find page
+    return render(request, 'accounts/go_find.html', NavBarRender['go_find'])
 
 
 @authenticated_user
@@ -57,7 +62,7 @@ def register_page(request):  # User registration page
     # insert the form in to dictionary to assignee in to the HTML files
     context = {'form': form, 'pageType': 'register'}
     # Render the html content
-    return render(request, 'accounts/register.html', context)
+    return render(request, 'accounts/auth/register.html', context)
 
 
 @authenticated_user
@@ -80,7 +85,7 @@ def login_page(request):   # User sing in
 
     context = {'pageType': 'login'}
     # Render the login page html file
-    return render(request, 'accounts/login.html', context)
+    return render(request, 'accounts/auth/login.html', context)
 
 
 @login_required(login_url='login')  # Use of Django decorator to let only logged on users in the page
@@ -107,16 +112,16 @@ def users(request):
 @login_required(login_url='login')  # Use of Django decorator to let only logged on users in the page
 @allowed_users(allowed_roles=['Doctor'])   # Use costume decorator to allow only authenticated user type.
 def user_doctor(request):  # Costume Doctor page
-    return render(request, 'accounts/Doctor.html', NavBarRender['doctor'])
+    return render(request, 'accounts/users/Doctor.html', NavBarRender['doctor'])
 
 
 @login_required(login_url='login')  # Use of Django decorator to let only logged on users in the page
 @allowed_users(allowed_roles=['Patient'])   # Use costume decorator to allow only authenticated user type.
 def user_patient(request):  # Costume Patient page
-    return render(request, 'accounts/Patient.html', NavBarRender['patient'])
+    return render(request, 'accounts/users/Patient.html', NavBarRender['patient'])
 
 
 @login_required(login_url='login')  # Use of Django decorator to let only logged on users in the page
 @allowed_users(allowed_roles=['Administrator'])   # Use costume decorator to allow only authenticated user type.
 def user_admin(request):  # Costume Administrator page
-    return render(request, 'accounts/Administrator.html', NavBarRender['administrator'])
+    return render(request, 'accounts/users/Administrator.html', NavBarRender['administrator'])
