@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="he">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/front_style.css">
+    <link href='css/calendar_core.css' rel='stylesheet' />
+    <link href='css/calendar_daygrid.css' rel='stylesheet' />
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- Style spsal -->
+    <link rel="stylesheet" href="css/calendar_style.css">
+
+    <title>Calendar DR</title>
+  </head>
+  <body>
+  
+
+  <div id='calendar-container'>
+    <div id='calendar'></div>
+  </div>
+    
+    
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+    <script src='js/js_core.js'></script>
+    <script src='js/inter_js.js'></script>
+    <script src='js/daygrid.js'></script>
+    <script src='js/timegrid.js'></script>
+    <script src='list.js'></script>
+
+    
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
+
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      plugins: [ 'interaction', 'dayGrid', 'timeGrid', 'list' ],
+      height: 'parent',
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+      },
+      defaultView: 'dayGridMonth',
+      defaultDate: '2022-12-15',
+      navLinks: true, // can click day/week names to navigate views
+      editable: true,
+      eventLimit: true, // allow "more" link when too many events
+      events: [
+        {
+          title: 'All Day Event',
+          start: '2022-12-01',
+        },
+        {
+          title: 'Long Event',
+          start: '2022-12-07',
+          end: '2022-12-10'
+        },
+        {
+          groupId: 999,
+          title: 'Repeating Event',
+          start: '2020-02-09T16:00:00'
+        },
+        {
+          groupId: 999,
+          title: 'Repeating Event',
+          start: '2022-12-16T16:00:00'
+        },
+        {
+          title: 'Conference',
+          start: '2022-12-11',
+          end: '2022-12-13'
+        },
+        {
+          title: 'Meeting',
+          start: '2022-12-12T10:30:00',
+          end: '2022-12-12T12:30:00'
+        },
+        {
+          title: 'Lunch',
+          start: '2022-12-12T12:00:00'
+        },
+        {
+          title: 'Meeting',
+          start: '2022-12-12T14:30:00'
+        },
+        {
+          title: 'Happy Hour',
+          start: '2022-12-12T17:30:00'
+        },
+        {
+          title: 'Dinner',
+          start: '2022-12-12T20:00:00'
+        },
+        {
+          title: 'Birthday Party',
+          start: '2022-12-13T07:00:00'
+        },
+        {
+          title: 'Click for Google',
+          url: 'http://google.com/',
+          start: '2022-12-28'
+        }
+      ]
+    });
+
+    calendar.render();
+  });
+
+    </script>
+
+    <script src="js/main.js"></script>
+  </body>
+</html>
