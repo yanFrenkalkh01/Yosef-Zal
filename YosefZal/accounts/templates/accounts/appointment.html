@@ -1,0 +1,71 @@
+{% extends 'accounts/base/main.html' %}
+
+{% block title %}Appointment{% endblock %}
+
+{% block content %}
+ <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
+   <div class="col-md-100 p-lg-100 mx-2 my-5">
+     <h4 class="text-center">זימון תורים</h4>
+     <form>
+       <div class="row">
+         <div class="col-sm-3"></div>
+         <div class="col-sm-3"></div>
+         <div class="col-sm-3"></div>
+       </div>
+     </form>
+     <hr><p class="mb-0"> אצלינו יש מלא תורים כי הלקוחות פשוט לא חוזרים!  </p>
+   </div>
+ </div>
+
+<div class="row">
+  <!-- תעודים חדשים-->
+  <div class="col bg-light">
+            <!---------------תעוד חדש-->
+    <div class="bg-light me-md-3 pt-3 px-8 pt-md-5 px-md-5 text-center overflow-hidden">
+      <div class="my-1 py-1"></div>
+    </div>
+    <!--סוף לתעוד החדש-->
+  </div>
+</div>
+<center>
+  <div class="col bg-light">
+  <!------------------------------------------>
+    <div class="container mt-6 row">
+      <!-- בחירת רופא + סוג רופא-->
+      <div class="dropdown col-6">
+          <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+             בחירת רופא
+          </button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">{{ doctor }}</a></li>
+            <li><a class="dropdown-item" href="#">Link 2</a></li>
+            <li><a class="dropdown-item" href="#">Link 3</a></li>
+          </ul>
+        </div>
+
+        <div class="dropdown col-6">
+          <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+            סוג רופא
+          </button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">רופה משפחה</a></li>
+            <li><a class="dropdown-item" href="#">רופה רקטאלי</a></li>
+            <li><a class="dropdown-item" href="#">רופה עור</a></li>
+          </ul>
+        </div>
+
+  <!-- בחירת תאריך -->
+      <p class="text-center">התאריכים הפנוים </p>
+      <button type="button" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#demo">תאריכים</button>
+      <center>
+        <div id="demo" class="collapse col-6">
+          <center>
+            <iframe src="{% url 'cal:calendar' %}" name="iframe_a" height="650px" width="400px" title="Iframe Example"></iframe>
+          </center>
+        </div>
+      </center>
+        <button onclick="window.location.href='{% url 'patient' %}'" type="submit" class="btn btn-primary">הזמן תור</button>
+    </div>
+  </div>
+</center>
+{% endblock %}

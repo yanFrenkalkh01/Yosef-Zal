@@ -2,6 +2,7 @@
 
 {% block title %}Patient{% endblock %}
 
+
 {% block content %}
 
 <main>
@@ -41,7 +42,7 @@
       <center>
         <div class="bg-light me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
           <div class="my-3 py-3">
-            <iframe src="calender.html" name="iframe_a" height="650px" width="400px" title="Iframe Example"></iframe>
+            <iframe src="{% url 'cal:calendar' %}" name="iframe_a" height="650px" width="400px" title="Iframe Example"></iframe>
           </div>
         </div>
       </center>

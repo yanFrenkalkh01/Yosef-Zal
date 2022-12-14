@@ -11,11 +11,12 @@
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
-
-		{% if pageType == 'home' %}
-			<span class="navbar-brand mx-auto mx-lg-0">יוספז"ל בע"מ</span>
-		{% elif pageType == 'login' or 'register' or 'go_find' %}
-			<span class="navbar-brand mx-auto mx-lg-0" id="size_plus_bold_top2">יוספז"ל בע"מ</span>
+		{% if pageType != 'upload' %}
+			{% if pageType == 'home' %}
+				<span class="navbar-brand mx-auto mx-lg-0">יוספז"ל בע"מ</span>
+			{% elif pageType == 'login' or 'register' or 'go_find' %}
+				<span class="navbar-brand mx-auto mx-lg-0" id="size_plus_bold_top2">יוספז"ל בע"מ</span>
+			{% endif %}
 		{% endif %}
 		<div class="collapse navbar-collapse" id="navbarNav">
 			<ul class="navbar-nav ms-lg-5">
@@ -42,7 +43,40 @@
 							<span><a class="display-7" href="{% url 'logout' %}">יומן</a></span>
 						</div>
 					</div>
+				{% elif pageType == 'Patient' %}
+					<div class="me-md-3">
+						<div class="navbar-brand mx-auto mx-lg-0">
+							<span><a class="display-7" href="{% url 'appointment' %}">זימון תור</a></span>
+						</div>
+					</div>
 
+					<div class="me-md-3">
+						<div class="navbar-brand mx-auto mx-lg-0">
+							<span><a class="display-7" href="{% url 'chatroom' %}">פגישה</a></span>
+						</div>
+					</div>
+				{% elif pageType == 'Doctor' %}
+					<div class="me-md-3">
+						<div class="navbar-brand mx-auto mx-lg-0">
+							<span><a class="display-7" href="{% url 'chatroom' %}">פגישה</a></span>
+						</div>
+					</div>
+				{% elif pageType == 'chatRoom' %}
+					<div class="me-md-3">
+						<div class="navbar-brand mx-auto mx-lg-0">
+							<span><a class="display-7" href="{% url 'list' %}">Upload file</a></span>
+						</div>
+					</div>
+					<div class="me-md-3">
+						<div class="navbar-brand mx-auto mx-lg-0">
+							<span><a class="display-7" href="{% url 'prescriptions' %}">Prescriptions</a></span>
+						</div>
+					</div>
+					<div class="me-md-3">
+						<div class="navbar-brand mx-auto mx-lg-0">
+							<span><a class="display-7" href="{% url 'history' %}">Meeting History</a></span>
+						</div>
+					</div>
 				{% endif %}
 
 			</ul>
@@ -59,6 +93,18 @@
 		<div class="d-lg-flex align-items-center d-none ms-auto">
 			<a class="custom-btn btn" id="size_plus_bold_top2" href="{% url 'home' %}">{% bs_icon 'house' %}</a>
 		</div>
+		{% elif pageType == 'chatRoom' %}
+			<div class="me-md-3">
+				<div class="navbar-brand mx-auto mx-lg-0">
+					<span><a class="display-7" href="{% url 'users' %}">exit</a></span>
+				</div>
+			</div>
+		{% elif pageType == 'upload' or pageType == 'prescriptions' %}
+			<div class="me-md-3">
+				<div class="navbar-brand mx-auto mx-lg-0">
+					<span><a class="display-7" href="{% url 'chatroom' %}">back</a></span>
+				</div>
+			</div>
 		{% endif %}
 
 		{% if pageType == 'home' %}

@@ -8,8 +8,7 @@
     <link rel="stylesheet" type="text/css" href="{% static '/css/chat/chat.css' %}">
 </head>
 <body>
-
-    <div class="container">
+    <div class="container-fluid">
         <div id="chat-log">
             {% for chat in chats.all %}
                 {% if chat.user.id == request.user.id %}
@@ -25,10 +24,12 @@
         </div>
     </div>
 
-    <div class="container">
-        <input class="textInput" id="chat-message-input" type="text" placeholder="Say something!"><br>
-        <input class="button" id="chat-message-submit" type="button" value="Send">
+    <div class="container-fluid">
+        <center>
+            <input class="textInput" id="chat-message-input" type="text" placeholder="Say something!"><br>
+            <input class="button" id="chat-message-submit" type="button" value="Send">
         {{ room_name|json_script:"room-name" }}
+        </center>
     </div>
 
     {{ request.user.id|json_script:"user_id" }}

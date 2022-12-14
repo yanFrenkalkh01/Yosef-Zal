@@ -3,12 +3,17 @@ from django.views.decorators.clickjacking import xframe_options_exempt
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group, User
 from django.http import HttpResponse
+from django.template import RequestContext
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+
+
 
 # Create your views here.
 from .models import *
-from .forms import CreateUserForm
+from .forms import CreateUserForm, DocumentForm
 from .decorators import authenticated_user, allowed_users, user_redirect
 
 
@@ -112,13 +117,26 @@ def users(request):
 @login_required(login_url='login')
 @xframe_options_exempt
 def profile(request):
-    return render(request, 'accounts/users/profile.html')
+    query_set = Group.objects.filter(user=request.user)
+    return render(request, 'accounts/users/profile.html', {'grups': query_set[0]})
 
 
 @login_required(login_url='login')
 @xframe_options_exempt
 def note(request):
     return render(request, 'accounts/users/note.html')
+
+
+@login_required(login_url='login')
+def appointment(request):
+    group = Group.objects.get(name='Doctor')
+    user = group.user_set.all()
+    doctors = []
+    for i in user:
+        doctors.append(user[0])
+
+    context = {'doctor': doctors[0]}
+    return render(request, 'accounts/appointment.html', context)
 
 
 @login_required(login_url='login')  # Use of Django decorator to let only logged on users in the page
@@ -129,7 +147,8 @@ def user_doctor(request):  # Costume Doctor page
 
 @login_required(login_url='login')  # Use of Django decorator to let only logged on users in the page
 @allowed_users(allowed_roles=['Patient'])   # Use costume decorator to allow only authenticated user type.
-def user_patient(request):  # Costume Patient page
+def user_patient(request):
+
     return render(request, 'accounts/users/Patient.html', NavBarRender['patient'])
 
 
@@ -137,3 +156,50 @@ def user_patient(request):  # Costume Patient page
 @allowed_users(allowed_roles=['Administrator'])   # Use costume decorator to allow only authenticated user type.
 def user_admin(request):  # Costume Administrator page
     return render(request, 'accounts/users/Administrator.html', NavBarRender['administrator'])
+
+
+@login_required(login_url='login')
+def user_chat_room(request):
+    context = {'pageType': 'chatRoom'}
+    return render(request, 'accounts/users/chatroom.html', context)
+
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['Doctor'])
+def list(request):
+    # Handle file upload
+    if request.method == 'POST':
+        form = DocumentForm(request.POST, request.FILES)
+        if form.is_valid():
+            newdoc = Document(docfile = request.FILES['docfile'])
+            newdoc.save()
+
+            # Redirect to the document list after POST
+            return HttpResponseRedirect(reverse('accounts.views.list'))
+    else:
+        form = DocumentForm() # A empty, unbound form
+
+    # Load documents for the list page
+    documents = Document.objects.all()
+
+    # Render list page with the documents and the form
+    return render(
+        request,
+        'accounts/upload/list.html',
+        {'documents': documents, 'form': form, 'pageType': 'upload'},
+    )
+
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['Doctor'])
+def doctor_prescriptions(request):
+    context = {'pageType': 'prescriptions'}
+    return render(request, 'accounts/prescriptions.html', context)
+
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['Doctor'])
+def doctor_history(request):
+    context = {'pageType': 'prescriptions'}
+    return render(request, 'accounts/history.html', context)
+

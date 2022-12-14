@@ -8,8 +8,9 @@
 </head>
 <body>
     <div>
-        <h3>What chat room would you like to enter?</h3>>
+        <h3>What chat room would you like to enter?{{ request.user }}</h3>>
         <input class="textInput" id="room-name-input" type="text" size="100"><br>
+        <input type="hidden" id="myVar" name="variable" value="{{ request.user }}">
         <input class="button" id="room-name-submit" type="button" value="Enter">
     </div>
 

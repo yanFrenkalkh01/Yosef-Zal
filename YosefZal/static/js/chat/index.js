@@ -1,11 +1,10 @@
-document.querySelector('#room-name-input').focus();
-document.querySelector('#room-name-input').onkeyup = function(e) {
-    if (e.keyCode === 13) {  // enter, return
-        document.querySelector('#room-name-submit').click();
-    }
-};
+//fix that to be independent code
+// should redirect to the same room depended on user make new modul of tupples
 
-document.querySelector('#room-name-submit').onclick = function(e) {
-    var roomName = document.querySelector('#room-name-input').value;
-    window.location.pathname = '/chat/' + roomName + '/';
-};
+var myVar = document.getElementById("myVar").value;
+if (myVar === 'ziv'){
+    window.location.href = '/chat/' + 'david' + '/';
+}
+else{
+    window.location.href = '/chat/' + myVar + '/';
+}
