@@ -1,0 +1,35 @@
+.card {
+	box-shadow: 0 4px 8px 0 #f18e8f;
+	max-width: 300px;
+	margin: auto;
+	text-align: center;
+	font-family: arial;
+  }
+  
+.title {
+	color: grey;
+	font-size: 18px;
+ }
+
+  button {
+	border: none;
+	outline: 0;
+	display: inline-block;
+	padding: 8px;
+	color: white;
+	background-color: #f18e8f;
+	text-align: center;
+	cursor: pointer;
+	width: 100%;
+	font-size: 18px;
+  }
+  
+  a {
+	text-decoration: none;
+	font-size: 22px;
+	color: #f18e8f;
+  }
+  
+  button:hover, a:hover {
+	opacity: 0.7;
+  }

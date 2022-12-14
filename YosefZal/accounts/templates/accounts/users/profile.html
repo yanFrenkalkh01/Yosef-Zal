@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"><!-- מיוחד לדף זה-->
+<link href="{% static 'css/user/profli_css.css' %}" rel="stylesheet"><!-- מיוחד לדף זה-->
+</head>
+<body>
+<div class="card"><!-- מיוחד לדף זה-->
+	<img src="{% static 'images/happy-bearded-young-man.jpg' %}" alt="רפי פוזאליו"><!-- מיוחד לדף זה-->
+  <h1>{{request.user}}</h1><!-- מיוחד לדף זה-->
+  <p>רופא ומנתח רקטום</p><!-- מיוחד לדף זה-->
+  <p><button>פרטים אישים</button></p><!-- מיוחד לדף זה-->
+</div>
+
+</body>
+</html>

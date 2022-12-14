@@ -4,6 +4,50 @@
 
 {% block content %}
 
-    <h1>Administrator</h1>
+<main>
+<!--מיוחד לכל דף-->
+<!-- כותרת ברוך הבא-->
+  <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
+    <div class="col-md-100 p-lg-100 mx-2 my-5">
+      <h1 class="display-4 fw-normal">מערכת יוספז״ל</h1>
+      <p class="lead fw-normal">ברוך הבא למערכת</p>
+    </div>
+    <div class="product-device shadow-sm d-none d-md-block"></div>
+    <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
+  </div>
+
+<!--שורוה עליונה שלישיה-->
+  <div class="d-md-flex justify-content-center w-10 my-md-3 ps-md-3">
+  <!--שורוה עליונה שלישיה-->
+    <div class="d-md-flex justify-content-center w-100 my-md-3 ps-md-3">
+      <center>
+        <div class="bg-light me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
+          <div class="my-3 p-3">
+            <h2 class="display-5">פרופיל המשתמש</h2>
+            <iframe src="{% url 'profile' %}" name="iframe_a" height="400px" width="400px" title="profile"></iframe>
+          </div>
+        </div>
+      </center>
+
+      <center>
+        <div class="bg-light me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
+          <div class="my-3 py-3">
+            <h2 class="display-5">מרכז עדכונים</h2>
+          </div>
+          <iframe src="{% url 'note' %}" name="iframe_a" height="600px" width="400px" title="Iframe Example"></iframe>
+        </div>
+      </center>
+
+      <center>
+        <div class="bg-light me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
+          <div class="my-3 py-3">
+            <iframe src="calender.html" name="iframe_a" height="650px" width="400px" title="Iframe Example"></iframe>
+          </div>
+        </div>
+      </center>
+
+    </div>
+  </div>
+</main>
 
 {% endblock %}

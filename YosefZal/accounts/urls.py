@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 
+
 urlpatterns = [
     # Authentication urls
     path('register/', views.register_page, name="register"),
@@ -18,7 +19,8 @@ urlpatterns = [
     path('users/Doctor/', views.user_doctor, name="doctor"),
     path('users/Patient/', views.user_patient, name="patient"),
     path('users/Administrator/', views.user_admin, name="administrator"),
-
+    path('users/profile/', views.profile, name="profile"),
+    path('users/note/', views.note, name="note"),
 
 ]
 

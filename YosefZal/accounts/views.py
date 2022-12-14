@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.forms import inlineformset_factory
+from django.views.decorators.clickjacking import xframe_options_exempt
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -107,6 +107,18 @@ def dashboard(request):
 @user_redirect   # Use costume decorator redirect users based on user type.
 def users(request):
     return HttpResponse("ERROR 404 you dont cant be in that page")  # massage if the user entered forbidden page
+
+
+@login_required(login_url='login')
+@xframe_options_exempt
+def profile(request):
+    return render(request, 'accounts/users/profile.html')
+
+
+@login_required(login_url='login')
+@xframe_options_exempt
+def note(request):
+    return render(request, 'accounts/users/note.html')
 
 
 @login_required(login_url='login')  # Use of Django decorator to let only logged on users in the page
