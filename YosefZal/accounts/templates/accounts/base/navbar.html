@@ -1,3 +1,4 @@
+{% load bootstrap_icons %}
 <section class="preloader">
 	<div class="spinner">
 		<span class="spinner-rotate"></span>
@@ -21,7 +22,7 @@
 
 				{% if pageType == 'home' %}
 					<li class="nav-item">
-						<a class="nav-link click-scroll" id="size_plus_bold_top" href="gofind.html">אודות</a>
+						<a class="nav-link click-scroll" id="size_plus_bold_top" href="section_1">אודות</a>
 					</li>
 
 					<li class="nav-item">
@@ -35,21 +36,35 @@
 					<li class="nav-item">
 						<a class="nav-link click-scroll" id="size_plus_bold_top" href="#section_5">צור קשר</a>
 					</li>
-				{% elif pageType == 'login' or 'register' or 'go_find' %}
+				{% elif pageType == 'Administrator' %}
+					<div class="me-md-3">
+						<div class="navbar-brand mx-auto mx-lg-0">
+							<span><a class="display-7" href="{% url 'logout' %}">יומן</a></span>
+						</div>
+					</div>
 
-					<li class="nav-item">
-						<a class="nav-link click-scroll" id="size_plus_bold_top2" href="{% url 'home' %}">בית</a>
-					</li>
-				{% elif pageType == '' %}
 				{% endif %}
 
 			</ul>
 		</div>
 
+		<!-- If statement to detect the page and change the buttons accordingly -->
+		{% if pageType == 'Patient' or pageType == 'Doctor' or pageType == 'Administrator' %}
+			<div class="me-md-3">
+				<div class="navbar-brand mx-auto mx-lg-0">
+					<span><a class="display-7" href="{% url 'logout' %}">Logout</a></span>
+				</div>
+			</div>
+		{% elif pageType == 'login' or pageType ==  'register' or pageType == 'go_find' %}
+		<div class="d-lg-flex align-items-center d-none ms-auto">
+			<a class="custom-btn btn" id="size_plus_bold_top2" href="{% url 'home' %}">{% bs_icon 'house' %}</a>
+		</div>
+		{% endif %}
+
 		{% if pageType == 'home' %}
 			<div class="d-lg-flex align-items-center d-none ms-auto">
-				<i class="navbar-icon bi-telephone-plus me-3"></i>
-				<a class="custom-btn btn" href="{% url 'go_find' %}">
+				<i class="navbar-icon me-3">{% bs_icon 'telephone-plus' %}</i>
+				<a class="custom-btn btn"  href="{% url 'go_find' %}">
 					*לך תחפש
 				</a>
 			</div>
