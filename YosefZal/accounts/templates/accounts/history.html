@@ -1,108 +1,77 @@
 {% extends 'accounts/base/main.html' %}
 
-{% block title %}Doctor{% endblock %}
+{% block title %}History{% endblock %}
 
 {% block content %}
+<!-- מיוחד לדף זה-->
 <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
-  <div class="col-md-100 p-lg-100 mx-2 my-5">
-    <h4 class="text-center">לשונית חיפוש</h4>
-    <form>
-      <div class="row">
-        <div class="col-sm-3">
-          <button type="submit" class="btn btn-primary">חיפוש</button>
-        </div>
-        <div class="col-sm-3">
-          <input type="text" class="form-control" placeholder="שם הלקוח">
-        </div>
-        <div class="col-sm-3">
-          <input type="text" class="form-control" placeholder="תעודת הזהות של הלקוח">
-        </div>
-      </div>
-    </form>
-    <hr>
-    <p class="mb-0">!חיפוש כל המידע על החולים במקום אחד, פלוס הפתעה</p>
-  </div>
+    <div class="col-md-100 p-lg-100 mx-2 my-5">
+        <h4 class="text-center">המתופל</h4>
+        <form>
+            <center>
+                <div class="col bg-light">
+                    <div class="card col-3" style="width:400px">
+                        <div class="card-body">
+                          <h4 class="card-title">{{ patient.user.last_name }} {{ patient.user.first_name }}</h4>
+                          <p class="card-text">תעודת זהות: {{ patient.profile_number }}</p>
+                        </div>
+                    </div>
+                </div>
+            </center>
+        </form>
+    </div>
 </div>
 
-<div class="row">
-  <!-- תעודים חדשים-->
-  <div class="col bg-light">
-    <!---------------תעוד חדש-->
-    <div class="bg-light me-md-3 pt-3 px-8 pt-md-5 px-md-5 text-center overflow-hidden">
-      <div class="my-1 py-1">
-        <p>תעודת חדש</p>
-        <input type="text" class="form-control" placeholder="הקלדת הנושא">
-      </div>
-      <!-- בחירת התאריך-->
-      <div class="container mt-3">
-        <div class="dropdown">
-          <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">תאריך הפגישה</button>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">היום</a></li>
-            <li><a class="dropdown-item" href="#">אתמול</a></li>
-            <li><a class="dropdown-item" href="#">תאריך</a></li>
-            <li><a class="dropdown-item" href="#">תאריך</a></li>
-          </ul>
-        </div>
-      </div>
-      <!-- תביה לתעוד הפגישה-->ֿ
-      <div class="container mt-3">
-        <div class="mb-3 mt-3">
-          <label for="comment">תעוד הפגישה</label>
-          <textarea class="form-control" rows="5" id="comment" name="text"></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">שמור</button>
-      </div>
-      <!--סוף התיבה-->
-    </div>
-    <!--סוף לתעוד החדש-->
-  </div>
-  <!-- תעודים חדשים סוף-->
+<div class="form-content  ">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+            <div class="row">
+            <!-- תעודים חדשים-->
+                <div class="col bg-light">
+                    <!---------------תעוד חדש-->
+                    <div class="bg-light me-md-3 pt-3 px-8 pt-md-5 px-md-5 text-center overflow-hidden">
+                        <!-- תביה לתעוד הפגישה-->ֿ
+                        <div class="container mt-3">
+                            <div class="mb-3 mt-3">
+                                <label for="comment"><h4>תעוד הפגישה</h4></label>
+                                <br>
+                                <h4>{{ description.description  }}</h4>
+                                <br>
+                            </div>
+                            <button type="submit" class="btn btn-primary">שמור</button>
+                        </div>
+                          <!--סוף התיבה-->
+                    </div>
+                    <!--סוף לתעוד החדש-->
+                </div>
+            </div>
+    </form>
 </div>
+<!-- תעודים חדשים סוף-->
 <div class="col bg-light">
 <!------------------------------------------>
-  <div class="container mt-9">
-      <!-- פרופיל החולה-->
-      <div class="card col-3" style="width:400px">
-          <div class="card-body">
-            <h4 class="card-title">אלכסיס אמסלם</h4>
-            <p class="card-text">תעודת זהות: 3111111111</p>
-            <a href="#" class="btn btn-primary">כנס לפרופיל</a>
-          </div>
-        </div>
-  </div>
-<!-- תעודים במערכת-->
-  <p>תעודים קיימים</p>
-  <form>
-    <select multiple class="form-select" id="sel2" name="sellist2">
-      <option>פגישה בנושא:~~~~~~~ תאריך:~~~~~~ סיכום:~~~~א</option>
-      <option>פגישה בנושא:~~~~~~~ תאריך:~~~~~~ סיכום:~~~~א</option>
-      <option>פגישה בנושא:~~~~~~~ תאריך:~~~~~~ סיכום:~~~~א</option>
-      <option>פגישה בנושא:~~~~~~~ תאריך:~~~~~~ סיכום:~~~~א</option>
-      <option>פגישה בנושא:~~~~~~~ תאריך:~~~~~~ סיכום:~~~~א</option>
-      <option>פגישה בנושא:~~~~~~~ תאריך:~~~~~~ סיכום:~~~~א</option>
-      <option>פגישה בנושא:~~~~~~~ תאריך:~~~~~~ סיכום:~~~~א</option>
-      <option>פגישה בנושא:~~~~~~~ תאריך:~~~~~~ סיכום:~~~~א</option>
-      <option>פגישה בנושא:~~~~~~~ תאריך:~~~~~~ סיכום:~~~~א</option>
-      <option>פגישה בנושא:~~~~~~~ תאריך:~~~~~~ סיכום:~~~~א</option>
-      <option>פגישה בנושא:~~~~~~~ תאריך:~~~~~~ סיכום:~~~~א</option>
-      <option>פגישה בנושא:~~~~~~~ תאריך:~~~~~~ סיכום:~~~~א</option>
-      <option>פגישה בנושא:~~~~~~~ תאריך:~~~~~~ סיכום:~~~~א</option>
-      <option>פגישה בנושא:~~~~~~~ תאריך:~~~~~~ סיכום:~~~~א</option>
-  </select>
-    <button type="submit" class="btn btn-primary mt-3">בחרה</button>
-  </form>
-</div>
-<!------------------------------------------>
-<div class="col bg-light">
-  <div class="container mt-3">
-    <h2>A way to make a smile</h2>
-    <p>Press a button to smile....</p>
-    <button type="button" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#demo">smile</button>
-    <div id="demo" class="collapse">
-      <img src="images/joke.jpg" class="avatar-image image-large img-fluid" alt="">
-      <!--joke.jpg-->
+    <br><br>
+    <div class="container mt-9">
+        <center><label for="comment"><h4>פגישות שחלפו</h4></label></center>
+        <form>
+          <select multiple class="form-select" id="sel2" name="sellist2">
+              {% for event in events %}
+                <option> Event date: {{ event.event_date }} ~~ Event Name: {{ event.event_name }} ~~ Description: {{ event.description }} </option>
+              {% endfor %}
+          </select>
+        </form>
     </div>
-  </div>
+    <!------------------------------------------>
+
+    <div class="col bg-light">
+        <div class="container mt-3">
+            <h2>A way to make a smile</h2>
+            <p>Press a button to smile....</p>
+            <button type="button" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#demo">smile</button>
+            <div id="demo" class="collapse">
+                <img src="images/joke.jpg" class="avatar-image image-large img-fluid" alt="">
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

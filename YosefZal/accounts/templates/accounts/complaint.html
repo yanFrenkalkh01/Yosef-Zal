@@ -1,0 +1,42 @@
+{% extends 'accounts/base/main.html' %}
+
+{% block title %}Complaint{% endblock %}
+
+{% block content %}
+<main>
+  <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
+    <div class="col-md-100 p-lg-100 mx-2 my-5">
+      <h1 class="display-4 fw-normal">מערכת יוספז״ל</h1><!-- כותרת גדולה----------------------------------------------------------->
+        <p class="lead fw-normal">  ברוך הבא למערכת קריאות , כאן תוכלו פתוח קריאות</p>
+    </div>
+    <div class="product-device shadow-sm d-none d-md-block"></div>
+    <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
+  </div>
+
+<!--שורוה עליונה שלישיה-->
+    <center>
+        <div class="form-content  ">
+          <form method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+                 <div class="row">
+                    <div class="col bg-light">
+                        <div class="bg-light me-md-3 pt-3 px-8 pt-md-5 px-md-5 text-center overflow-hidden">
+                            <div class="container mt-3">
+                                <div class="mb-3 mt-3">
+                                    <label><h4>פתיחת קריא</h4></label>
+                                    <br>
+                                    <h4>{{ complaint_form.complaint  }}</h4>
+                                    <br>
+                                </div>
+                                <button type="submit" class="btn btn-primary">שמור</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              <br/>
+          </form>
+        </div>
+    </center>
+</main>
+
+{% endblock %}

@@ -1,19 +1,21 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.clickjacking import xframe_options_exempt
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group, User
+from django.contrib.auth.views import PasswordChangeView
+from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponse
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
-from django.urls import reverse
-
+from django.urls import reverse, reverse_lazy
 
 
 # Create your views here.
+from chatrooms.models import ChatRoom
 from .models import *
-from .forms import CreateUserForm, DocumentForm
+from .forms import CreateUserForm, DocumentForm, UpdateUserForm, UpdateProfileForm, GenerateEvent, EditEventDescription, MakeComplaint
 from .decorators import authenticated_user, allowed_users, user_redirect
 
 
@@ -61,7 +63,7 @@ def register_page(request):  # User registration page
             # Add user to grop
             user.groups.add(group)
 
-            messages.success(request, 'Account was crated for' + username)
+            messages.success(request, 'Account was crated for ' + username)
             # Redirect to login page if the registration was successful
             return redirect('login')
     # insert the form in to dictionary to assignee in to the HTML files
@@ -101,6 +103,12 @@ def logout_user(request):   # Logout page
     return redirect('home')
 
 
+class ChangePasswordView(SuccessMessageMixin, PasswordChangeView):
+    template_name = 'accounts/auth/change_password.html'
+    success_message = "Successfully Changed Your Password"
+    success_url = reverse_lazy('users')
+
+
 @login_required(login_url='login')  # Use of Django decorator to let only logged on users in the page
 @allowed_users(allowed_roles=['Administrator'])  # Use costume decorator to allow only authenticated user type.
 def dashboard(request):
@@ -122,6 +130,25 @@ def profile(request):
 
 
 @login_required(login_url='login')
+def edit_profile(request):
+    if request.method == 'POST':
+        user_form = UpdateUserForm(request.POST, instance=request.user)
+        profile_form = UpdateProfileForm(request.POST, request.FILES, instance=request.user.profile)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, 'Your profile is updated successfully')
+            return redirect(to='users')
+    else:
+        user_form = UpdateUserForm(instance=request.user)
+        profile_form = UpdateProfileForm(instance=request.user.profile)
+    context = {'user_form': user_form,
+               'profile_form': profile_form,
+               'pageType': 'edit_profile'}
+    return render(request, 'accounts/users/edit_profile.html', context)
+
+
+@login_required(login_url='login')
 @xframe_options_exempt
 def note(request):
     return render(request, 'accounts/users/note.html')
@@ -129,13 +156,20 @@ def note(request):
 
 @login_required(login_url='login')
 def appointment(request):
+    if request.method == 'POST':
+        event_form = GenerateEvent(request.POST, instance=UserEvent(patient=request.user.profile))
+        if event_form.is_valid():
+            event_form.instance.event_name = request.user.username + ' meting'
+            event_form.save()
+            messages.success(request, 'The appointment was crated successfully')
+            return redirect(to='users')
+    else:
+        event_form = GenerateEvent(instance=UserEvent(patient=request.user.profile))
     group = Group.objects.get(name='Doctor')
     user = group.user_set.all()
-    doctors = []
-    for i in user:
-        doctors.append(user[0])
-
-    context = {'doctor': doctors[0]}
+    context = {'doctor': user,
+               'event_form': event_form
+               }
     return render(request, 'accounts/appointment.html', context)
 
 
@@ -177,7 +211,7 @@ def list(request):
             # Redirect to the document list after POST
             return HttpResponseRedirect(reverse('accounts.views.list'))
     else:
-        form = DocumentForm() # A empty, unbound form
+        form = DocumentForm()  # A empty, unbound form
 
     # Load documents for the list page
     documents = Document.objects.all()
@@ -200,6 +234,72 @@ def doctor_prescriptions(request):
 @login_required(login_url='login')
 @allowed_users(allowed_roles=['Doctor'])
 def doctor_history(request):
-    context = {'pageType': 'prescriptions'}
+    room = ChatRoom.objects.first()
+    room_name = room.name
+    user = room_name.split(request.user.username)
+    patient = Profile.objects.filter(profile_number=user[0])
+    events = UserEvent.objects.filter(patient=patient[0], doctor=request.user.username)
+    if request.method == "POST":
+        description = EditEventDescription(request.POST, instance=events.first())
+        if description.is_valid():
+            description.save()
+            messages.success(request, 'The description was crated successfully')
+            return redirect(to='meetings')
+    else:
+        description = EditEventDescription(instance=events.first())
+
+    context = {'pageType': 'prescriptions',
+               'events': events,
+               'description': description,
+               'patient': patient[0]}
     return render(request, 'accounts/history.html', context)
 
+
+@login_required(login_url='login')
+def meting_list(request):
+    group = request.user.groups.get()
+    print(group)
+    if str(request.user.groups.get()) == 'Doctor':
+        meetings = UserEvent.objects.filter(doctor=request.user.username)
+    else:
+        meetings = UserEvent.objects.filter(patient=request.user.profile)
+    context = {'pageType': 'meetings',
+               'list': meetings,
+               'group': str(group)}
+    return render(request, 'accounts/meting_list.html', context)
+
+
+@login_required(login_url='login')
+def complaint_ticket(request):
+    group = request.user.groups.get()
+    if request.method == "POST":
+        complaint_form = MakeComplaint(request.POST, instance=UserComplaints(profile=request.user.profile))
+        if complaint_form.is_valid():
+            complaint_form.save()
+            messages.success(request, 'The complaint was crated successfully')
+            return redirect(to='users')
+    else:
+        complaint_form = MakeComplaint(instance=UserComplaints(profile=request.user.profile))
+
+    context = {'pageType': 'complaint',
+               'group': str(group),
+               'complaint_form': complaint_form}
+    return render(request, 'accounts/complaint.html', context)
+
+
+@login_required(login_url='login')
+@allowed_users(allowed_roles=['Administrator'])
+def ticket_page(request):
+    compliant = UserComplaints.objects.all()
+    context = {'compliant': compliant,
+               'pageType': 'ticket'}
+    return render(request, 'accounts/tickets_page.html', context)
+
+
+@login_required(login_url='login')
+def toggle_true_false(request):
+    print(request.GET.get('obj_id'))
+    obj = get_object_or_404(UserComplaints, pk=request.GET.get('obj_id'))
+    obj.open_close = not obj.open_close
+    obj.save()
+    return redirect(to='tickets')

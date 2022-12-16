@@ -1,0 +1,42 @@
+{% extends 'accounts/base/main.html' %}
+
+{% block title %}Meting List{% endblock %}
+
+{% block content %}
+    <div class="px-3 pt-md-5 px-md-500 text-center"></div>
+    <div class="px-3 pt-md-5 px-md-500 text-center"></div>
+    <div class="px-3 pt-md-5 px-md-500 text-center"></div>
+    <div class="px-3 pt-md-5 px-md-500 text-center"></div>
+    <div class="px-3 pt-md-5 px-md-500 text-center"></div>
+
+    <center>
+        <form  id="comment-form1" name="contact-form1"  onsubmit="return mysubmit();">
+            <select  id="option" class="chosen" >
+                {% if group == 'Patient' %}
+                    {% for event in list %}
+                        <option value="{{ event.patient.profile_number }}{{event.doctor}}"> Event date: {{ event.event_date }} ~~ Event Name: {{ event.event_name }}  ~~ Doctor Name: {{ event.doctor }} ~~ Doctor type: {{ event.doctor_type }} ~~ Start time: {{ event.event_time }} </option>
+                    {% endfor %}
+                {% else %}
+                    {% for event in list %}
+                        <option value="{{ event.patient.profile_number }}{{event.doctor}}"> Event date: {{ event.event_date }} ~~ Event Name: {{ event.event_name }}  ~~ Patient Name: {{ event.patient }} ~~ Start time: {{ event.event_time }}</option>
+                    {% endfor %}
+                {% endif %}
+            </select>
+            <br/>
+            <input name="submit" type="submit" value="Submit" /><br>
+        </form>
+    </center>
+
+<div class="bg-light me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
+    <iframe id="typef_orm_frame" name="iframe_a" height="600px" width="800px" title="Iframe Example"></iframe>
+</div>
+
+
+<script language="JavaScript" type="text/javascript">
+    document.getElementById('comment-form1').addEventListener('submit',(e)=>{e.preventDefault();
+    var myVar = document.getElementById("option").value;
+    var frameElement = document.getElementById("typef_orm_frame");
+    frameElement.src = ('http://127.0.0.1:8000/' + 'chat/' + myVar + '/');
+    })
+</script>
+{% endblock %}

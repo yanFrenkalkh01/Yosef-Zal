@@ -38,9 +38,16 @@
 						<a class="nav-link click-scroll" id="size_plus_bold_top" href="#section_5">צור קשר</a>
 					</li>
 				{% elif pageType == 'Administrator' %}
+
 					<div class="me-md-3">
 						<div class="navbar-brand mx-auto mx-lg-0">
-							<span><a class="display-7" href="{% url 'logout' %}">יומן</a></span>
+							<span><a class="display-7" href="{% url 'edit_profile' %}">פרטים אישים</a></span>
+						</div>
+					</div>
+
+					<div class="me-md-3">
+						<div class="navbar-brand mx-auto mx-lg-0">
+							<span><a class="display-7" href="{% url 'tickets' %}">תיפול בקריאות</a></span>
 						</div>
 					</div>
 				{% elif pageType == 'Patient' %}
@@ -52,16 +59,39 @@
 
 					<div class="me-md-3">
 						<div class="navbar-brand mx-auto mx-lg-0">
-							<span><a class="display-7" href="{% url 'chatroom' %}">פגישה</a></span>
+							<span><a class="display-7" href="{% url 'meetings' %}">פגישה</a></span>
+						</div>
+					</div>
+
+					<div class="me-md-3">
+						<div class="navbar-brand mx-auto mx-lg-0">
+							<span><a class="display-7" href="{% url 'edit_profile' %}">פרטים אישים</a></span>
+						</div>
+					</div>
+
+					<div class="me-md-3">
+						<div class="navbar-brand mx-auto mx-lg-0">
+							<span><a class="display-7" href="{% url 'complaint' %}">פתיחת קריאה</a></span>
 						</div>
 					</div>
 				{% elif pageType == 'Doctor' %}
 					<div class="me-md-3">
 						<div class="navbar-brand mx-auto mx-lg-0">
-							<span><a class="display-7" href="{% url 'chatroom' %}">פגישה</a></span>
+							<span><a class="display-7" href="{% url 'meetings' %}">פגישה</a></span>
 						</div>
 					</div>
-				{% elif pageType == 'chatRoom' %}
+					<div class="me-md-3">
+						<div class="navbar-brand mx-auto mx-lg-0">
+							<span><a class="display-7" href="{% url 'edit_profile' %}">פרטים אישים</a></span>
+						</div>
+					</div>
+
+					<div class="me-md-3">
+						<div class="navbar-brand mx-auto mx-lg-0">
+							<span><a class="display-7" href="{% url 'complaint' %}">פתיחת קריאה</a></span>
+						</div>
+					</div>
+				{% elif group == 'Doctor' and pageType != 'complaint'%}
 					<div class="me-md-3">
 						<div class="navbar-brand mx-auto mx-lg-0">
 							<span><a class="display-7" href="{% url 'list' %}">Upload file</a></span>
@@ -93,7 +123,7 @@
 		<div class="d-lg-flex align-items-center d-none ms-auto">
 			<a class="custom-btn btn" id="size_plus_bold_top2" href="{% url 'home' %}">{% bs_icon 'house' %}</a>
 		</div>
-		{% elif pageType == 'chatRoom' %}
+		{% elif pageType == 'chatRoom' or pageType == 'edit_profile' or pageType == 'meetings' or pageType == 'complaint' or pageType == 'ticket' %}
 			<div class="me-md-3">
 				<div class="navbar-brand mx-auto mx-lg-0">
 					<span><a class="display-7" href="{% url 'users' %}">exit</a></span>
@@ -102,7 +132,7 @@
 		{% elif pageType == 'upload' or pageType == 'prescriptions' %}
 			<div class="me-md-3">
 				<div class="navbar-brand mx-auto mx-lg-0">
-					<span><a class="display-7" href="{% url 'chatroom' %}">back</a></span>
+					<span><a class="display-7" href="{% url 'meetings' %}">back</a></span>
 				</div>
 			</div>
 		{% endif %}
@@ -115,6 +145,5 @@
 				</a>
 			</div>
 		{% endif %}
-
 	</div>
 </nav>

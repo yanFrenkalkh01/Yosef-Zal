@@ -27,3 +27,5 @@ class TestRegister(TestSetUp):
         password = self.password
         login = self.client.login(username=username, password=password)
         self.assertTrue(login)
+
+
